@@ -1,0 +1,103 @@
+{% extends 'base/_base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    {% if messages %}
+        <ul style="color: white" class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <div class="movie-container" style="color: white">
+        <h1 class="movie-title" style="color: black; font-size: 50px">{{ movie.title }}</h1>
+        <div class="movie-details" style="text-align: left; color: black; font-size: 36px">
+            <p><strong>Description:</strong> {{ movie.description }}</p>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p><strong>Director:</strong> {{ movie.director }}</p>
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+            {% if movie.cover_image %}
+                <p><strong>Image:</strong></p>
+                <img src="{{ movie.cover_image.url }}">
+            {% else %}
+                <p>No cover image available</p>
+            {% endif %}
+        </div>
+
+        <div class="btn-group d-flex justify-content-center" style="margin: 10px">
+            <form method="post" action="{% url 'movies:update_movie' pk=movie.id %}">
+                {% csrf_token %}
+                {% if user == movie.user %}
+                    <input type="submit" value="Update" class="btn btn-primary">
+                {% endif %}
+            </form>
+
+            <form method="post" action="{% url 'movies:delete_movie' pk=movie.id %}">
+                {% csrf_token %}
+                {% if user == movie.user %}
+                    <input type="hidden" name="next" value="{% url 'movies:movie_list' %}">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                {% endif %}
+            </form>
+
+            <button id="toggleFavoriteBtn" class="btn btn-warning">Toggle Favorite</button>
+        </div>
+
+
+        {#        <h2 style="color: black">User Ratings</h2>#}
+        {#        {% for rating in movie.ratings.all %}#}
+        {#            <p style="color: black">{{ rating.user.username }} - {{ rating.value }}</p>#}
+        {#        {% endfor %}#}
+        <h2 style="color: black">Average Rating</h2>
+        <p style="color: black">{{ movie.average_rating|floatformat:2 }}</p>
+
+        <h2 style="color: black">Rate this Movie</h2>
+        <p style="color: black">1 - 10</p>
+        <form method="post" action="{% url 'movies:movie_detail' movie.id %}">
+            {% csrf_token %}
+            {{ rating_form|crispy }}
+            <button type="submit" class="btn btn-primary">Submit Rating</button>
+        </form>
+
+
+        <h3 style="color: black">Comments</h3>
+        {% for comment in comments %}
+            <p style="color: black">{{ comment.text }} - {{ comment.user.username }} ({{ comment.created_at }})</p>
+        {% endfor %}
+
+        <!-- Comment form -->
+        <form method="post" action="{% url 'movies:add_comment' movie.id %}">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+
+        {% if user.is_authenticated %}
+            <script>
+                document.getElementById('toggleFavoriteBtn').addEventListener('click', function () {
+                    // Send a POST request to toggle_favorite endpoint
+                    fetch('{% url "movies:toggle_favorite" movie.id %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({}),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                // Update UI or provide feedback
+                                alert('Favorite status toggled!');
+                            } else {
+                                alert('Failed to toggle favorite status.');
+                            }
+                        });
+                });
+            </script>
+        {% endif %}
+    </div>
+{% endblock %}

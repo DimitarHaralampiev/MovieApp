@@ -1,0 +1,16 @@
+{% extends 'base/_base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 style="color: aqua">Add Comment</h1>
+    <h2 style="color: aqua">Movie: {{ movie.title }}</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <a href="{% url 'movies:movie_detail' pk=movie.pk %}">Back to Movie Details</a>
+{% endblock %}

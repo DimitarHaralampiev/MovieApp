@@ -1,0 +1,15 @@
+{% extends 'base/_base.html' %}
+
+{% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+    {% if movies %}
+        {% for movie in movies %}
+            <div>
+                <h2><a href="{% url 'movies:movie_detail' movie.id %}">{{ movie.title }}</a></h2>
+                <p>{{ movie.description }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2 style="text-align: center; color: aqua">{{ message }}</h2>
+    {% endif %}
+{% endblock %}

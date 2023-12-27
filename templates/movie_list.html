@@ -1,0 +1,104 @@
+{% extends 'base/_base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>MOVIE LIST </h1>
+
+    {% if messages %}
+        <ul style="color: white" class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="search-form-container" style="text-align: right; margin-bottom: 20px;">
+        <!-- Add dropdown for filtering by genre -->
+        <form class="filter-form" method="get" action="{% url 'movies:movie_list' %}">
+            <select name="genre" id="genre" onchange="this.form.submit()">
+                <option value="" {% if not request.GET.genre %}selected{% endif %}>All</option>
+                {% for genre_choice in genre_choices %}
+                    <option value="{{ genre_choice.0 }}"
+                            {% if request.GET.genre == genre_choice.0 %}selected{% endif %}>
+                        {{ genre_choice.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <form class="search-form" method="get" action="{% url 'movies:search_results' %}">
+            <div class="input-group">
+                <input type="text" id="search" name="q" placeholder="Search movies" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% for movie in movies %}
+                <a href="{% url 'movies:movie_detail' movie.id %}" class="col-md-4 mb-4 movie-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align: center">{{ movie.title }}</h5>
+                            <p class="card-text" style="text-align: center">{{ movie.description }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+
+        .search-form-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .search-form-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .filter-form,
+        .search-form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .filter-form select,
+        .search-form input {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .filter-form select {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-form input {
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .search-form button {
+            padding: 8px 15px;
+        }
+
+        .movie-card {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+{% endblock %}

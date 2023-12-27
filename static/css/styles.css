@@ -1,0 +1,91 @@
+.popular {
+    color: white;
+    text-align: center;
+}
+
+.movie-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.movie-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.movie-details {
+    margin-bottom: 20px;
+}
+
+.movie-details p {
+    margin-bottom: 10px;
+}
+
+.movie-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-title {
+    font-size: 2em; /* Adjust the font size as needed */
+    color: white; /* Change the color to your desired value */
+    /* Add any other styles as needed */
+}
+
+.p-white {
+    color: aqua;
+    text-align: center;
+}
+
+.white {
+    color: aqua;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: aqua;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: brown;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+nav {
+    background-color: #eee;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+main {
+    padding: 20px;
+}

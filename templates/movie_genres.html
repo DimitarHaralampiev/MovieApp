@@ -1,0 +1,38 @@
+{% extends 'base/_base.html' %}
+
+{% block content %}
+
+    <h2 style="text-align: center; color: aqua">Genres</h2>
+    <div class="container">
+        {% for genre, movies in genre_movies.items %}
+            <div class="mb-4">
+                <h3 style="text-align: center; color: aqua">{{ genre }}</h3>
+                <div class="row">
+                    {% for movie in movies %}
+                        <a href="{% url 'movies:movie_detail' movie.id %}" class="col-md-4 mb-3 movie-card">
+                            <div class="card">
+                                <div class="card-body" style="text-align: center">
+                                    <h5 class="card-title">{{ movie.title }}</h5>
+                                    <p class="card-title">{{ movie.description }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <style>
+        .movie-card {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+{% endblock %}

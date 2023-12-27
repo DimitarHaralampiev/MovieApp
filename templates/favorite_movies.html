@@ -1,0 +1,27 @@
+{% extends 'base/_base.html' %}
+
+{% block content %}
+    <h1>YOUR FAVORITE MOVIES</h1>
+
+    <div class="container">
+        <div class="row">
+            {% if favorite_movies %}
+                {% for movie in favorite_movies %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'movies:movie_detail' movie.id %}">{{ movie.title }}</a></h5>
+                                <p class="card-text">{{ movie.description }}</p>
+                                <!-- Add other movie details as needed -->
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <h3 style="text-align: center; color: aqua">You haven't marked any movies as favorites yet.</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
