@@ -7,15 +7,14 @@
         <div class="row">
             {% if favorite_movies %}
                 {% for movie in favorite_movies %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{% url 'movies:movie_detail' movie.id %}">{{ movie.title }}</a></h5>
+                    <a href="{% url 'movies:movie_detail' movie.id %}" class="col-md-4 mb-4 movie-card">
+                        <div class="card movie-card-container">
+                            <div class="card-body" style="text-align: center">
+                                <h5 class="card-title">{{ movie.title }}</h5>
                                 <p class="card-text">{{ movie.description }}</p>
-                                <!-- Add other movie details as needed -->
                             </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
             {% else %}
                 <div class="col-md-12">
@@ -24,4 +23,21 @@
             {% endif %}
         </div>
     </div>
+
+    <style>
+        .movie-card {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-card-container {
+            margin-bottom: 20px;
+        }
+    </style>
+
 {% endblock %}

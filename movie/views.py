@@ -202,7 +202,7 @@ class AddMovieView(LoginRequiredMixin, View):
 class UpdateMovieView(LoginRequiredMixin, UpdateView):
     """View for updating the details of a movie."""
     model = Movie
-    fields = ['description', 'release_date', 'cover_image']
+    fields = ['description', 'release_date', 'director', 'cover_image']
     template_name = 'update_movie.html'
     success_url = reverse_lazy('movies:movie_list')
 

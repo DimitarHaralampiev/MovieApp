@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h2 style="text-align: center; color: white">Most Liked</h2>
+    <h2 style="text-align: center; color: aqua">Most Liked Movies</h2>
     <div class="container">
         <div class="row">
             {% for movie in most_liked_movies %}
@@ -12,7 +12,7 @@
                             <h5 class="card-title" style="text-align: center">{{ movie.title }}</h5>
                             <p class="card-title" style="text-align: center">{{ movie.description }}</p>
                             <p class="card-text" style="text-align: center">Average Rating:
-                                {{ movie.average_rating|default:"N/A" }}</p>
+                                {{ movie.average_rating|floatformat:2 }}</p>
                         </div>
                     </div>
                 </a>
