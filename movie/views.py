@@ -128,8 +128,7 @@ class SearchResultsView(View):
         """Handle GET request for searching movies."""
         try:
             query = request.GET.get('q')
-            genre_filter = request.GET.get('genre')
-            movies = Movie.objects.filter(genre=genre_filter)
+            movies = Movie.objects.all()
 
             if query:
                 movies = movies.filter(
